@@ -1,0 +1,59 @@
+Program:
+/*
+ * main.c
+ *
+ * Created: 8/5/2025 4:20:41 PM
+ *  Author: Ritesh
+ */ 
+
+/*
+ Green Light ->PB0
+ Yellow Light -> PB1
+ Red Light -> PB2
+ */
+#include <xc.h>
+void Delay(int, int[]);
+int main(void)
+{
+	/* GPIO Configuration */
+	PORTB=0x00;
+	DDRB|=0x07; // PB0-PB2 -> Output Mode 
+    TCCR0=0x02; // Normal mode of the timer, Timer clock =CPU_clock/8;
+   TCNT0=0x00;
+     
+   while(1)
+    {
+	PORTB|=(1<<0);  // Green ON
+	PORTB&=~(1<<1); // Yellow off
+	PORTB&=~(1<<2); // Red off
+	
+	Delay(10);    // 10 sec delay
+
+              PORTB&=~(1<<0);  // Green Off
+              PORTB|=(1<<1); // Yellow ON
+	PORTB&=~(1<<2); // Red off
+    
+	Delay(5);    // 10 sec delay
+	
+	PORTB&=~(1<<0);  // Green off
+	PORTB&=~(1<<1); // Yellow off
+	PORTB|=(1<<2); // Red on
+	
+	Delay(10);
+	}
+}
+    void Delay(int i)
+	{
+             unsigned int count=0;
+	int a=0;
+	unsigned int j=0;
+	j = (i*1000000)/256; // Timer clock = 1 MHz, CPU_clock = 8 MHz
+	TCNT0=0x00;
+	while(count<=j)
+	{			
+	a = TIFR & (1<<0);    // Checking timer overflow flag
+	if(a==1)
+	{
+                           count++;
+               	TIFR |=(1<<0);  // Reseting the timer overflow flag
+     	   }	
