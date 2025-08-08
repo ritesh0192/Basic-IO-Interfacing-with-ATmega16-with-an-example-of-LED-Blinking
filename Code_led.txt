@@ -1,0 +1,29 @@
+
+  main.c
+  This program will blink an LED connected to PB0
+  Created 9122024 100854 AM
+   Author Ritesh
+  
+
+#include xc.h
+void delay(unsigned int);
+int main(void)
+{
+	 Baisc port configuration
+	DDRB=(10);  Configure PB0 in the output mode
+
+    while(1)
+    {
+		PORTB=(10);
+		delay(1000);
+		PORTB&=~(10);
+		delay(10000);
+        TODO Please write your application code 
+    }
+}
+
+void delay(unsigned int i)
+{
+	int j=0;
+	for(j=0; ji; j++);
+}
