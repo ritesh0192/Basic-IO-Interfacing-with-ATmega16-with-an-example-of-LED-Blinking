@@ -1,0 +1,34 @@
+/*
+ * main.c
+ *
+ * Created: 9/18/2024 2:40:31 PM
+ *  Author: Ritesh
+ */ 
+                         
+#include <xc.h>
+
+int main(void)
+{
+
+/* Baisc pin configuration */
+
+DDRB = 0x01;                  / *or  DDRB |= (1<<0), DDRB & = ~(1<<1) */
+                                          /* PB0 -> Output mode and PB1 -> Input mode */
+
+PORTB|=(1<<1);            /* Enable pull-up on PB1       1<<0 = 0000 0001, 1<<1 = 0000 0010
+    
+int a=0; 
+While(1)
+{
+a = PINB & (1<<1);
+if (a==2)    /* The switch is not pressed */
+{
+PORTB &= ~(1<<0);  /* LED off */
+}
+else
+{
+PORTB |=(1<<0); /* LED ON */
+
+}
+}
+
